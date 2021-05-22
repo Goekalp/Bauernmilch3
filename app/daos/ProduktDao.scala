@@ -19,11 +19,11 @@ class ProduktDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvide
 
   def insert(produkt: Produkt): Future[Unit] = db.run(Produkte += produkt).map { _ => () }
 
-  private class ProduktTable(tag: Tag) extends Table[Produkt](tag, "produkt") {
+  private class ProduktTable(tag: Tag) extends Table[Produkt](tag, "PRODUKT") {
 
-    def name = column[String]("name", O.PrimaryKey)
+    def name = column[String]("NAME", O.PrimaryKey)
 
-    def color = column[Int]("price")
+    def color = column[Int]("PRICE")
 
     def * = (name, color) <> (Produkt.tupled, Produkt.unapply)
 
