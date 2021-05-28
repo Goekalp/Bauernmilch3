@@ -19,6 +19,9 @@ scalaVersion := "2.13.5"
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 libraryDependencies += "org.postgresql" % "postgresql" % "42.2.6"
+//von playDoku
+//libraryDependencies += "com.typesafe.play" %% "play-slick" % "4.0.0"
+
 
 libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick" % "5.0.0",

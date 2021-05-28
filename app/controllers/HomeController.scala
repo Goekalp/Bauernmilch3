@@ -1,11 +1,9 @@
 package controllers
 
 import play.api.mvc._
-//import play.api.db._
 import javax.inject.{Inject, _}
 import daos.ProduktDao
 import model.Produkt
-import play.api._
 import play.api.data.Form
 import play.api.data.Forms.{mapping, number, text}
 import scala.concurrent.ExecutionContext
