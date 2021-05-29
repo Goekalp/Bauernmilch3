@@ -22,10 +22,12 @@ class ProduktDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvide
   private class ProduktTable(tag: Tag) extends Table[Produkt](tag, "PRODUKT") {
 
     def name = column[String]("NAME", O.PrimaryKey)
+    def nachname = column[String]("NACHNAME")
+    def email = column[String]("EMAIL")
 
     def color = column[Int]("PRICE")
 
-    def * = (name, color) <> (Produkt.tupled, Produkt.unapply)
+    def * = (name, nachname, email, color) <> (Produkt.tupled, Produkt.unapply)
 
   }
 }

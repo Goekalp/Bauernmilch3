@@ -35,6 +35,8 @@ class HomeController @Inject()(produktDao: ProduktDao, controllerComponents: Con
   val produktForm = Form(
     mapping(
       "name" -> text(),
+      "nachname" -> text(),
+      "email" -> text(),
       "price" -> number())(Produkt.apply)(Produkt.unapply))
 
   def insertProdukt = Action.async { implicit request =>
@@ -43,4 +45,13 @@ class HomeController @Inject()(produktDao: ProduktDao, controllerComponents: Con
   }
 
 
+
 }
+
+
+
+
+
+
+
+

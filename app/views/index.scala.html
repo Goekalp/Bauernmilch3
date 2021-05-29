@@ -2,19 +2,21 @@
 @(produkte: Seq[Produkt])
 
 @main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
+  <h1>Frische Milch vom Bauer</h1>
 
   <form action="/insert/produkt" method="POST">
     <input name="name" type="text" placeholder="name"/>
-    <input name="price" type="number" placeholder="price"/>
+    <input nachname="nachname" type="text" placeholder="nachname"/>
+    <input email="email" type="text" placeholder="email"/>
+    <input price="price" type="number" placeholder="price"/>
     <input type="submit"/>
   </form>
 
   <h2>Bisher erstellte Produkte:</h2>
   <table>
-    <tr><th>Name</th><th>Preis</th></tr>
+    <tr><th>Name</th><th>Nachname</th><th>Email</th><th>Preis</th></tr>
     @for(prod <- produkte){
-      <tr><td>@prod.name</td><td>@prod.price</td></tr>
+      <tr><td>@prod.name</td><td>@prod.nachname</td></tr> <tr><td>@prod.email</td><td>@prod.price</td></tr>
     }
   </table>
 
