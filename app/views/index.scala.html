@@ -1,22 +1,25 @@
-@import model.Produkt
-@(produkte: Seq[Produkt])
+@import model.Nutzer
+@(nutzer: Seq[Nutzer])
 
 @main("Welcome to Play") {
   <h1>Frische Milch vom Bauer</h1>
 
-  <form action="/insert/produkt" method="POST">
-    <input name="name" type="text" placeholder="name"/>
-    <input nachname="nachname" type="text" placeholder="nachname"/>
-    <input email="email" type="text" placeholder="email"/>
-    <input price="price" type="number" placeholder="price"/>
+  <form action="/insert/nutzer" method="POST">
+    <input name="vorname" type="text" placeholder="name"/>
+    <input name="nachname" type="text" placeholder="nachname"/>
+    <input name="strasse" type="text" placeholder="strasse"/>
+    <input name="plz" type="number" placeholder="plz"/>
+    <input name="ort" type="text" placeholder="ort"/>
+    <input name="kategorie" type="text" placeholder="kategorie"/>
+    <input name="passwort" type="text" placeholder="passwort"/>
     <input type="submit"/>
   </form>
 
   <h2>Bisher erstellte Produkte:</h2>
   <table>
-    <tr><th>Name</th><th>Nachname</th><th>Email</th><th>Preis</th></tr>
-    @for(prod <- produkte){
-      <tr><td>@prod.name</td><td>@prod.nachname</td></tr> <tr><td>@prod.email</td><td>@prod.price</td></tr>
+    <tr><th>Vorname</th><th>Nachname</th><th>Email</th><th>Preis</th></tr>
+    @for(nutz <- nutzer){
+      <tr><td>@nutz.Vorname</td><td>@nutz.Nachname</td></tr>
     }
   </table>
 

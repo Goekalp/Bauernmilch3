@@ -1,11 +1,14 @@
 package controllers
 
 import play.api.mvc._
+
 import javax.inject.{Inject, _}
-import daos.ProduktDao
+import daos.{NutzerDao, ProduktDao}
 import model.Produkt
+import model.Nutzer
 import play.api.data.Form
-import play.api.data.Forms.{mapping, number, text}
+import play.api.data.Forms.{mapping, number, optional, text}
+
 import scala.concurrent.ExecutionContext
 
 /**
@@ -13,7 +16,7 @@ import scala.concurrent.ExecutionContext
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(produktDao: ProduktDao, controllerComponents: ControllerComponents)
+class HomeController @Inject()(produktDao: ProduktDao, nutzerDao: NutzerDao, controllerComponents: ControllerComponents)
                               (implicit executionContext: ExecutionContext) extends AbstractController(controllerComponents) {
 
   /**
@@ -24,7 +27,7 @@ class HomeController @Inject()(produktDao: ProduktDao, controllerComponents: Con
    * a path of `/`.
    */
   def index() = Action.async {
-    produktDao.all().map { case (produkte) => Ok(views.html.index(produkte)) }
+    nutzerDao.all().map { case (nutzer) => Ok(views.html.index(nutzer)) }
   }
 
   def env() = Action { implicit request: Request[AnyContent] =>
@@ -44,7 +47,21 @@ class HomeController @Inject()(produktDao: ProduktDao, controllerComponents: Con
     produktDao.insert(produkt).map(_ => Redirect(routes.HomeController.index))
   }
 
+  val nutzerForm = Form(
+    mapping(
+      "id" -> optional(number),
+      "vorname" -> text(),
+      "nachname" -> text(),
+      "strasse" -> text(),
+      "plz" -> number(),
+      "ort" -> text(),
+      "kategorie" -> text(),
+      "passwort" -> text())(Nutzer.apply)(Nutzer.unapply))
 
+  def insertNutzer = Action.async { implicit request =>
+    val nutzer: Nutzer = nutzerForm.bindFromRequest.get
+    nutzerDao.insert(nutzer).map(_ => Redirect(routes.HomeController.index))
+  }
 
 }
 

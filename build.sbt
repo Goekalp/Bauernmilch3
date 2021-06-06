@@ -28,6 +28,12 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick-evolutions" % "5.0.0"
 )
 
+//libraryDependencies ++= Seq(
+//  "org.pac4j" %% "play-pac4j" % "11.0.0-PLAY2.8",
+//  "org.pac4j" %% "pac4j-oidc" % "5.0.0"
+//)
+
+
 
 
 
