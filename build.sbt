@@ -12,7 +12,7 @@ herokuConfigVars in Compile := Map(
 
 
 herokuJdkVersion in Compile := "14"
-herokuAppName in Compile := "nameless-ravine-84201"
+herokuAppName in Compile := "justmilk"
 
 scalaVersion := "2.13.5"
 
