@@ -11,3 +11,12 @@ p {
     font-family: verdana;
     font-size: 20px;
 }
+
+.form__select{
+    width: fit-content;
+}
+
+.logo{
+    width: 100px;
+    position: absolute;
+}

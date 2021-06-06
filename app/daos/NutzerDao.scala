@@ -27,10 +27,10 @@ import scala.concurrent.{ExecutionContext, Future}
       def strasse = column[String]("strasse")
       def plz = column[Int]("plz")
       def ort = column[String]("ort")
-      def kategorie = column[String]("kategorie")
-      def passwort = column[String]("passwort")
+      def bauername = column[String]("bauername")
+      def anzahlflasche = column[Int]("anzahlflasche")
 
-      def * = (id.?, vorname, nachname, strasse, plz, ort, kategorie,passwort) <> (Nutzer.tupled, Nutzer.unapply)
+      def * = (id.?, vorname, nachname, strasse, plz, ort, bauername, anzahlflasche) <> (Nutzer.tupled, Nutzer.unapply)
 
     }
 

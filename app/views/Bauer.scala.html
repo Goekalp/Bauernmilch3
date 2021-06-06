@@ -1,0 +1,24 @@
+@import model.Bauer
+@(bauer: Seq[Bauer])
+
+@main("Welcome to Play") {
+    <img class="logo" src="/assets/images/cow.png" alt="Kuh"><h1>Frische Milch vom Bauer</h1>
+
+    <form action="/insert/bauer" method="POST">
+        <input name="vorname" type="text" placeholder="name"/>
+        <input name="nachname" type="text" placeholder="nachname"/>
+        <input name="firmenname" type="text" placeholder="firmenname"/>
+        <input name="anzahlflasche" type="number" placeholder="anzahl an Flaschen"/>
+        <input type="submit"/>
+    </form>
+
+    <h2>Bisher erstellte Produkte:</h2>
+    <table>
+        <tr><th>Vorname</th><th>Nachname</th><th>Firmenname</th><th>Anzahl Flaschenmilch</th></tr>
+        @for(bau <- bauer){
+            <tr><td>@bau.vorname</td><td>@bau.nachname</td><td>@bau.firmenname</td><td>@bau.anzahlFlasche</td></tr>
+        }
+    </table>
+
+
+}

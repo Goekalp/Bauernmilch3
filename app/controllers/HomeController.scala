@@ -3,9 +3,8 @@ package controllers
 import play.api.mvc._
 
 import javax.inject.{Inject, _}
-import daos.{NutzerDao, ProduktDao}
-import model.Produkt
-import model.Nutzer
+import daos.{BauerDAO, LoginDao, NutzerDao, ProduktDao}
+import model.{Bauer, Login, Nutzer, Produkt}
 import play.api.data.Form
 import play.api.data.Forms.{mapping, number, optional, text}
 
@@ -16,7 +15,7 @@ import scala.concurrent.ExecutionContext
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(produktDao: ProduktDao, nutzerDao: NutzerDao, controllerComponents: ControllerComponents)
+class HomeController @Inject()(produktDao: ProduktDao, bauerDao: BauerDAO, loginDao: LoginDao, nutzerDao: NutzerDao, controllerComponents: ControllerComponents)
                               (implicit executionContext: ExecutionContext) extends AbstractController(controllerComponents) {
 
   /**
@@ -26,8 +25,14 @@ class HomeController @Inject()(produktDao: ProduktDao, nutzerDao: NutzerDao, con
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def index() = Action.async {
-    nutzerDao.all().map { case (nutzer) => Ok(views.html.index(nutzer)) }
+
+  def index() = Action {
+    Ok(views.html.index())
+  }
+
+
+  def nutzer() = Action.async {
+    nutzerDao.all().map { case (nutzer) => Ok(views.html.Nutzer(nutzer)) }
   }
 
   def env() = Action { implicit request: Request[AnyContent] =>
@@ -42,10 +47,10 @@ class HomeController @Inject()(produktDao: ProduktDao, nutzerDao: NutzerDao, con
       "email" -> text(),
       "price" -> number())(Produkt.apply)(Produkt.unapply))
 
-  def insertProdukt = Action.async { implicit request =>
-    val produkt: Produkt = produktForm.bindFromRequest.get
-    produktDao.insert(produkt).map(_ => Redirect(routes.HomeController.index))
-  }
+  //  def insertProdukt = Action.async { implicit request =>
+  //    val produkt: Produkt = produktForm.bindFromRequest.get
+  //    produktDao.insert(produkt).map(_ => Redirect(routes.HomeController.index))
+  //  }
 
   val nutzerForm = Form(
     mapping(
@@ -55,14 +60,54 @@ class HomeController @Inject()(produktDao: ProduktDao, nutzerDao: NutzerDao, con
       "strasse" -> text(),
       "plz" -> number(),
       "ort" -> text(),
-      "kategorie" -> text(),
-      "passwort" -> text())(Nutzer.apply)(Nutzer.unapply))
+      "bauername" -> text(),
+      "anzahlflasche" -> number())(Nutzer.apply)(Nutzer.unapply))
 
   def insertNutzer = Action.async { implicit request =>
     val nutzer: Nutzer = nutzerForm.bindFromRequest.get
-    nutzerDao.insert(nutzer).map(_ => Redirect(routes.HomeController.index))
+    nutzerDao.insert(nutzer).map(_ => Redirect(routes.HomeController.nutzer()))
   }
 
+  val bauerForm = Form(
+    mapping(
+      "id" -> optional(number),
+      "vorname" -> text(),
+      "nachname" -> text(),
+      "firmenname" -> text(),
+      "anzahlflasche" -> number())(Bauer.apply)(Bauer.unapply))
+
+  def insertBauer = Action.async { implicit request =>
+    val bauer: Bauer = bauerForm.bindFromRequest.get
+    bauerDao.insert(bauer).map(_ => Redirect(routes.HomeController.bauer))
+  }
+
+  def bauer() = Action.async {
+    bauerDao.all().map { case (bauer) => Ok(views.html.Bauer(bauer)) }
+  }
+
+
+  def login() = Action.async { implicit request =>
+    val loggings: Login = loginForm.bindFromRequest.get
+    loginDao.all().map { case (login) =>
+      var isValid = false
+      login.map { log =>
+        if (loggings.vorname.equals(log.vorname) && loggings.nachname.equals(log.nachname) && loggings.passwort.equals(log.passwort)) isValid = true
+      }
+      if (isValid) Redirect(routes.HomeController.bauer)
+      else NotFound
+    }
+  }
+
+  val loginForm = Form(
+    mapping(
+      "vorname" -> text(),
+      "nachname" -> text(),
+      "passwort" -> text())(Login.apply)(Login.unapply))
+
+  def signup() = Action.async {
+    nutzerDao.all().map { case (users) => Ok(views.html.Signin()) }
+
+  }
 }
 
 

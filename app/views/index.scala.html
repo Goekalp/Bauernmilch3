@@ -1,26 +1,58 @@
 @import model.Nutzer
-@(nutzer: Seq[Nutzer])
+@()
 
 @main("Welcome to Play") {
-  <h1>Frische Milch vom Bauer</h1>
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Document</title>
 
-  <form action="/insert/nutzer" method="POST">
-    <input name="vorname" type="text" placeholder="name"/>
-    <input name="nachname" type="text" placeholder="nachname"/>
-    <input name="strasse" type="text" placeholder="strasse"/>
-    <input name="plz" type="number" placeholder="plz"/>
-    <input name="ort" type="text" placeholder="ort"/>
-    <input name="kategorie" type="text" placeholder="kategorie"/>
-    <input name="passwort" type="text" placeholder="passwort"/>
-    <input type="submit"/>
-  </form>
+            <style>
+                    .container {
+                        width: 200px;
+                        height: 400px;
+                    }
+                    .form {
+                        width: 100%;
+                        height: 100%;
 
-  <h2>Bisher erstellte Produkte:</h2>
-  <table>
-    <tr><th>Vorname</th><th>Nachname</th><th>Email</th><th>Preis</th></tr>
-    @for(nutz <- nutzer){
-      <tr><td>@nutz.Vorname</td><td>@nutz.Nachname</td></tr>
-    }
-  </table>
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                    }
+                    .form__label {
+                        font-size: 14px;
+                        color: black;
+                        font-weight: bold;
+                    }
+                    .submit {
+                        padding: 10px 20px;
+                        background: rgb(105, 160, 22);
+                        color: white;
+                        font-size: 20px;
+                    }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <img class="logo" src="/assets/images/cow.png" alt="Kuh"><h1>Login</h1>
+                <form action="/login" class="form">
+                    <label for="vorname" class="form__label">Vorname:</label>
+                    <input type="text" id="vorname" name="vorname" />
+                    <label for="nachname" class="form__label">Nachname:</label>
+                    <input type="text" id="nachname" name="nachname" />
+                    <label for="passwort" class="form__label">Passwort:</label>
+                    <input type="password" id="passwort" name="passwort" />
+
+                    <button class="form__submit" type="submit">Log in</button>
+                    <a href="/signup">signup</a>
+                </form>
+            </div>
+        </body>
+    </html>
 
 }

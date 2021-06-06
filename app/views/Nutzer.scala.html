@@ -1,0 +1,15 @@
+@import model.Nutzer
+@(nutzer: Seq[Nutzer])
+
+@main("Welcome to Play") {
+  <img class="logo" src="/assets/images/cow.png" alt="Kuh"><h1>Frische Milch vom Bauer</h1>
+
+  <h2>Bisher erstellte Produkte:</h2>
+  <table>
+    <tr><th>Vorname</th><th>Nachname</th><th>Strasse</th><th>PLZ</th><th>Ort</th><th>Bauername</th><th>Anzahl Flaschen</th></tr>
+      @for(nutz <- nutzer){
+      <tr><td>@nutz.Vorname</td><td>@nutz.Nachname</td><td>@nutz.Strasse</td><td>@nutz.PLZ</td><td>@nutz.Ort</td><td>@nutz.Bauername</td><td>@nutz.AnzahlFlasche</td></tr>
+    }
+  </table>
+
+}

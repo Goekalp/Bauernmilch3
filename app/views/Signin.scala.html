@@ -1,0 +1,15 @@
+@()
+@main("Signup"){
+    <img class="logo" src="/assets/images/cow.png" alt="Kuh"><h1>Offene Bestellungen</h1>
+    <form action="/insert/nutzer" method="POST">
+        <input name="vorname" type="text" placeholder="name"/>
+        <input name="nachname" type="text" placeholder="nachname"/>
+        <input name="strasse" type="text" placeholder="strasse"/>
+        <input name="plz" type="number" placeholder="plz"/>
+        <input name="ort" type="text" placeholder="ort"/>
+        <input name="bauername" type="text" placeholder="bauername"/>
+        <input name="anzahlflasche" type="text" placeholder="anzahlflasche"/>
+        <input name="passwort" type="text" placeholder="passwort"/>
+        <input type="submit"/>
+    </form>
+}
